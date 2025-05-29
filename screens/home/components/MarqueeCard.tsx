@@ -1,8 +1,53 @@
 import { metrics } from "@/theme/metrics";
 import { typography } from "@/theme/typography";
+import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Animated, {
+  Easing,
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 function MarqueeCard() {
+  const [textWidth, setTextWidth] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const translateX = useSharedValue(0);
+
+  const animate = useCallback(() => {
+    if (containerWidth === 0 || textWidth === 0) return;
+
+    translateX.value = withTiming(
+      -textWidth - metrics.spacing.sm,
+      {
+        duration: ((containerWidth + textWidth) / 50) * 1000,
+        easing: Easing.linear,
+      },
+      (finished) => {
+        if (finished) {
+          runOnJS(resetAndAnimate)();
+        }
+      }
+    );
+  }, [containerWidth, textWidth, translateX]);
+
+  const resetAndAnimate = useCallback(() => {
+    translateX.value = containerWidth + metrics.spacing.sm;
+    animate();
+  }, [animate, containerWidth, translateX]);
+
+  useEffect(() => {
+    if (containerWidth && textWidth) {
+      translateX.value = containerWidth + metrics.spacing.sm;
+      animate();
+    }
+  }, [animate, containerWidth, textWidth, translateX]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
+  }));
+
   return (
     <View style={styles.container}>
       <View style={styles.mainContent}>
@@ -10,8 +55,18 @@ function MarqueeCard() {
           <Text style={styles.typeText}>霓虹文字</Text>
           <Text style={styles.effectText}>(酷炫)</Text>
         </View>
-        <View style={styles.marqueeTextContainer}>
-          <Text style={styles.marqueeText}>內容內容內容內容內容內容</Text>
+
+        <View
+          style={styles.marqueeTextContainer}
+          onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}
+        >
+          <Animated.Text
+            style={[styles.marqueeText, animatedStyle]}
+            numberOfLines={1}
+            onLayout={(e) => setTextWidth(e.nativeEvent.layout.width)}
+          >
+            內容內容內容內容內容內容內容內容內容內容內容內容內容內容內容內容
+          </Animated.Text>
         </View>
       </View>
     </View>
@@ -47,8 +102,8 @@ const styles = StyleSheet.create({
   },
   marqueeTextContainer: {
     width: metrics.screenWidth * 0.7,
-    overflow: "hidden",
     padding: metrics.spacing.sm,
+    overflow: "hidden",
   },
   marqueeText: {
     ...typography.bold.h1,
