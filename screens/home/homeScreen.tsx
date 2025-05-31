@@ -1,15 +1,18 @@
+import { TYPE_LIST } from "@/constants/home";
 import { metrics } from "@/theme/metrics";
 import { theme } from "@/theme/theme";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import MarqueeCard from "./components/MarqueeCard";
+import ToolList from "./components/ToolList";
 
 function HomeScreen() {
   return (
     <View style={styles.container}>
-      {Array.from({ length: 4 }).map((_, index) => (
-        <MarqueeCard key={index} />
+      {TYPE_LIST.map((cardInfo, index) => (
+        <MarqueeCard key={index} cardInfo={cardInfo} />
       ))}
+      <ToolList />
     </View>
   );
 }
@@ -21,7 +24,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.background.neutral1000,
     paddingHorizontal: metrics.spacing.base,
     paddingVertical: metrics.spacing.sm,
-    gap: metrics.spacing.sm,
+    gap: metrics.spacing.lg,
   },
 });
 

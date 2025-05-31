@@ -1,5 +1,6 @@
 import { metrics } from "@/theme/metrics";
 import { typography } from "@/theme/typography";
+import { MarqueeType } from "@/types/home";
 import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Animated, {
@@ -10,7 +11,11 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-function MarqueeCard() {
+type Props = {
+  cardInfo: MarqueeType;
+};
+
+function MarqueeCard({ cardInfo }: Props) {
   const [textWidth, setTextWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
   const translateX = useSharedValue(0);
@@ -21,7 +26,7 @@ function MarqueeCard() {
     translateX.value = withTiming(
       -textWidth - metrics.spacing.sm,
       {
-        duration: ((containerWidth + textWidth) / 50) * 1000,
+        duration: ((containerWidth + textWidth) / 50) * 500,
         easing: Easing.linear,
       },
       (finished) => {
@@ -52,8 +57,8 @@ function MarqueeCard() {
     <View style={styles.container}>
       <View style={styles.mainContent}>
         <View style={styles.typeContainer}>
-          <Text style={styles.typeText}>霓虹文字</Text>
-          <Text style={styles.effectText}>(酷炫)</Text>
+          <Text style={styles.typeText}>{cardInfo.title}</Text>
+          <Text style={styles.effectText}>({cardInfo.subTitle})</Text>
         </View>
 
         <View
@@ -62,7 +67,6 @@ function MarqueeCard() {
         >
           <Animated.Text
             style={[styles.marqueeText, animatedStyle]}
-            numberOfLines={1}
             onLayout={(e) => setTextWidth(e.nativeEvent.layout.width)}
           >
             內容內容內容內容內容內容內容內容內容內容內容內容內容內容內容內容
