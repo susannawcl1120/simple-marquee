@@ -33,6 +33,15 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/eryaxindahei_T.ttf",
+            "./assets/fonts/montserrat_variableFont_wght.ttf"
+          ]
+        }
       ]
     ],
     "experiments": {
