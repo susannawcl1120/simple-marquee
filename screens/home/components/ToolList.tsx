@@ -3,11 +3,17 @@ import { theme } from "@/theme/theme";
 import { typography } from "@/theme/typography";
 import { ToolItemType } from "@/types/home";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Href, router } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 function ToolItem({ toolInfo }: { toolInfo: ToolItemType }) {
+  const onPress = () => {
+    router.push(toolInfo.link as Href);
+  };
+
   return (
     <Pressable
+      onPress={onPress}
       style={({ pressed }) => [
         styles.toolItemContainer,
         pressed && { opacity: 0.8 },
@@ -25,10 +31,30 @@ function ToolItem({ toolInfo }: { toolInfo: ToolItemType }) {
 
 function ToolList() {
   const toolList: ToolItemType[] = [
-    { title: "範本", icon: "insert-drive-file", bgColor: "#f5ee95" },
-    { title: "螢光棒", icon: "lightbulb-outline", bgColor: "#ebc0d1" },
-    { title: "投屏", icon: "cast", bgColor: "#c8e2c2" },
-    { title: "閃光燈", icon: "flashlight-on", bgColor: "#bfd4f5" },
+    {
+      title: "範本",
+      icon: "insert-drive-file",
+      bgColor: "#f5ee95",
+      link: "/(samples)/samples",
+    },
+    {
+      title: "螢光棒",
+      icon: "lightbulb-outline",
+      bgColor: "#ebc0d1",
+      link: "/(samples)/samples",
+    },
+    {
+      title: "投屏",
+      icon: "cast",
+      bgColor: "#c8e2c2",
+      link: "/(samples)/samples",
+    },
+    {
+      title: "閃光燈",
+      icon: "flashlight-on",
+      bgColor: "#bfd4f5",
+      link: "/(samples)/samples",
+    },
   ];
 
   return (

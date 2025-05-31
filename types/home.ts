@@ -10,4 +10,5 @@ export type ToolItemType = {
   title: string;
   icon: MaterialIconName;
   bgColor: string;
+  link: string;
 };
