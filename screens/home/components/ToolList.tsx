@@ -1,3 +1,4 @@
+import { TOOL_LIST } from "@/constants/home";
 import { metrics } from "@/theme/metrics";
 import { theme } from "@/theme/theme";
 import { typography } from "@/theme/typography";
@@ -30,38 +31,11 @@ function ToolItem({ toolInfo }: { toolInfo: ToolItemType }) {
 }
 
 function ToolList() {
-  const toolList: ToolItemType[] = [
-    {
-      title: "範本",
-      icon: "insert-drive-file",
-      bgColor: "#f5ee95",
-      link: "/(samples)/samples",
-    },
-    {
-      title: "螢光棒",
-      icon: "lightbulb-outline",
-      bgColor: "#ebc0d1",
-      link: "/(samples)/samples",
-    },
-    {
-      title: "投屏",
-      icon: "cast",
-      bgColor: "#c8e2c2",
-      link: "/(samples)/samples",
-    },
-    {
-      title: "閃光燈",
-      icon: "flashlight-on",
-      bgColor: "#bfd4f5",
-      link: "/(samples)/samples",
-    },
-  ];
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>更多</Text>
       <View style={styles.listContainer}>
-        {toolList.map((tool) => (
+        {TOOL_LIST.map((tool) => (
           <ToolItem key={tool.title} toolInfo={tool} />
         ))}
       </View>
