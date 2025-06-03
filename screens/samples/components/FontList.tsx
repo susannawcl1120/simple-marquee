@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+import { FONT_LIST } from "@/constants/sample";
 import { metrics } from "@/theme/metrics";
 import { theme } from "@/theme/theme";
 import { typography } from "@/theme/typography";
@@ -42,19 +43,13 @@ type Props = {
 };
 
 function FontList({ selectedFont, setSelectedFont }: Props) {
-  const fontOptions = [
-    { title: "跑馬燈", font: "" },
-    { title: "跑馬燈", font: "montserrat_variableFont_wght" },
-    { title: "跑馬燈", font: "eryaxindahei_T" },
-  ];
-
   const handleSelect = (font: string) => {
     setSelectedFont(font);
   };
 
   return (
     <View style={styles.container}>
-      {fontOptions.map((font, index) => (
+      {FONT_LIST.map((font, index) => (
         <FontItem
           key={index}
           font={font}
@@ -84,10 +79,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#3175dd",
   },
   buttonText: {
-    height: metrics.hp(16),
+    height: metrics.hp(20),
     alignItems: "center",
     justifyContent: "center",
     color: theme.colors.text.black,
+    ...typography.bold.caption1,
   },
   selectedText: {
     color: theme.colors.text.inverse,
